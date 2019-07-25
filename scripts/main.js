@@ -2,26 +2,23 @@ const ctx = document.getElementById('chart').getContext('2d');
 ctx.canvas.width = window.innerWidth;
 ctx.canvas.height = 300;
 
-const parsedData = window.data.map(({ time, heap }) => {
-    return { t: time, y: heap };
-});
-
 const chartConfiguration = {
     type: 'bar',
     data: {
         datasets: [{
-            label: 'Memory Usage',
+            label: '-', // WILL BE UPDATED
             backgroundColor: Chart.helpers.color(window.chartColors.red).alpha(0.5).rgbString(),
             borderColor: window.chartColors.red,
-            data: parsedData,
-            type: 'line',
+            data: [], // WILL BE UPDATED
+            type: 'bar',
             pointRadius: 0,
-            fill: false,
+            fill: true,
             lineTension: 0,
-            borderWidth: 2
+            borderWidth: 1,
         }]
     },
     options: {
+        events: [''],
         scales: {
             xAxes: [{
                 type: 'time',
@@ -34,25 +31,29 @@ const chartConfiguration = {
             yAxes: [{
                 scaleLabel: {
                     display: true,
-                    labelString: 'Heap'
                 }
             }]
         },
         tooltips: {
             intersect: false,
-            mode: 'index',
-            callbacks: {
-                label: function (tooltipItem, myData) {
-                    let label = myData.datasets[tooltipItem.datasetIndex].label || '';
-                    if (label) {
-                        label += ': ';
-                    }
-                    label += `${(tooltipItem.value / 1024 / 1024).toFixed(4)}MB`;
-                    return label;
-                }
-            }
+            mode: 'index'
         }
     }
 };
 
-const chart = new Chart(ctx, chartConfiguration);
+const LIMIT = 10;
+
+function stateToDisplay(state) {
+    let from = (state.length - LIMIT);
+    from = (from < 0) ? 0 : from;
+    return state.slice(from);
+}
+
+function renderChart(label, state) {
+    chartConfiguration.data.datasets[0].label = label;
+    chartConfiguration.data.datasets[0].data = state;
+    // chartConfiguration.data.datasets[0].data = stateToDisplay(state);
+    new Chart(ctx, chartConfiguration);
+}
+
+renderChart(window.label, window.records);
