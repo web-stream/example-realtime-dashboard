@@ -8,8 +8,5 @@ function produceEvent() {
     socket.send(JSON.stringify(payload));
 }
 
-// window.addEventListener('mousemove', _.debounce(produceEvent, 120));
-
-setInterval(() => {
-    produceEvent();
-}, 1000);
+window.addEventListener('mousemove', _.debounce(produceEvent, 120));
+// setInterval(produceEvent, 1000);
