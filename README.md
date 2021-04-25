@@ -1,6 +1,6 @@
 # example-realtime-dashboard
 
-Project with frontend (chart) and backend. Communication based on WebSockets.
+Project with frontend (chart) and backend. Communication was based on WebSockets.
 
 ![](./demo.png)
 
