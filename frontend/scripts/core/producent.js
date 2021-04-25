@@ -1,5 +1,3 @@
-
-// Inny klient
 function produceEvent() {
     const payload = {
         t: Date.now(),
@@ -8,5 +6,5 @@ function produceEvent() {
     socket.send(JSON.stringify(payload));
 }
 
-window.addEventListener('mousemove', _.debounce(produceEvent, 120));
 // setInterval(produceEvent, 1000);
+window.addEventListener('click', produceEvent);

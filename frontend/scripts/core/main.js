@@ -1,6 +1,6 @@
 const ctx = document.getElementById('chart').getContext('2d');
 ctx.canvas.width = window.innerWidth;
-ctx.canvas.height = 300;
+ctx.canvas.height = 500;
 
 const chartConfiguration = {
     type: 'bar',
@@ -43,7 +43,7 @@ const chartConfiguration = {
 
 const LIMIT = 10;
 
-function stateToDisplay(state) {
+function limitDatapoints(state) {
     let from = (state.length - LIMIT);
     from = (from < 0) ? 0 : from;
     return state.slice(from);
